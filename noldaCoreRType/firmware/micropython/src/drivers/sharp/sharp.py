@@ -57,17 +57,17 @@ class SHARP(framebuf.FrameBuffer):
         spi = self._spi
         bpl = self.width // 8  # Bytes per line
         self._pincs(1)  # CS is active high
-        spi.write(self._cmd)
+        spi.write(self._reverse_bit(self._cmd))
         start = 0
         lno = self._lno
         lno[0] = 1  # Gate line address (starts at 1)
         for _ in range(self.height):
-            spi.write(lno)
-            spi.write(self._mvb[start : start + bpl])
-            spi.write(self._dummy)
+            spi.write(self._reverse_bit(lno))
+            spi.write(self._reverse_bit(self._mvb[start : start + bpl]))
+            spi.write(self._reverse_bit(self._dummy))
             start += bpl
             lno[0] += 1  # Gate line address
-        spi.write(self._dummy)
+        spi.write(self._reverse_bit(self._dummy))
         self._pincs(0)
         self._cmd[0] ^= _VCOM  # Toggle frame inversion flag
 
@@ -75,6 +75,11 @@ class SHARP(framebuf.FrameBuffer):
     def update(self):
         self._pincs(1)
         self._lno[0] = self._cmd[0] & _VCOM
-        self._spi.write(self._lno)
+        self._spi.write(self._reverse_bit(self._lno))
         self._cmd[0] ^= _VCOM  # Toggle frame inversion flag
         self._pincs(0)
+
+    def _reverse_bit(self, bytearr):
+        new_arr = []
+        for bit in bytearr:
+            

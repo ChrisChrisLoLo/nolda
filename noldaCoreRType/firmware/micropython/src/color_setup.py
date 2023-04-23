@@ -39,7 +39,7 @@ width = 128
 
 pin_cs = machine.Pin(12, machine.Pin.OUT, value=1)
 vcom_pin = machine.Pin(13, machine.Pin.OUT, value=0)
-#extmode_pin = machine.Pin(14, machine.Pin.OUT_PP, value=0)
+extmode_pin = machine.Pin(14, machine.Pin.OUT, value=0)
 #spi = machine.SPI(1)
 # Not actually using pin 16
 # spi = SoftSPI(baudrate=100_000, polarity=1, phase=0, sck=Pin(10), mosi=Pin(11), miso=Pin(16), firstbit=machine.SPI.LSB)

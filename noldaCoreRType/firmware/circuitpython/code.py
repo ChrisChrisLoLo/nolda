@@ -6,6 +6,8 @@ import digitalio
 import sharpdisplay
 import terminalio
 import fontio
+from adafruit_display_text.label import Label
+from terminalio import FONT
 
 # Release the existing display, if any
 displayio.release_displays()
@@ -21,10 +23,14 @@ display = framebufferio.FramebufferDisplay(framebuffer)
 print(dir(display))
 
 
-bitmap = displayio.Bitmap(128, 128, 2)
-palette = displayio.Palette(2)
-tilegrid = displayio.TileGrid(bitmap, pixel_shader=palette)
+# bitmap = displayio.Bitmap(128, 128, 2)
+# palette = displayio.Palette(2)
+# tilegrid = displayio.TileGrid(bitmap, pixel_shader=palette)
 
-group = displayio.Group()
-group.append(tilegrid)
-display.show(group)
+# group = displayio.Group()
+# group.append(tilegrid)
+# display.show(group)
+
+label = Label(font=FONT, text="one\ntwo\nthree", x=20, y=20, scale=4, line_spacing=1.2)
+while True:
+    display.show(label)
