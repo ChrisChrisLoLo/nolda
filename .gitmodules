@@ -4,3 +4,6 @@
 [submodule "noldaCoreRType/firmware/c/sp-pico-sdk"]
 	path = noldaCoreRType/firmware/c/sp-pico-sdk
 	url = https://github.com/ChrisChrisLoLo/pico-sdk.git
+[submodule "noldaCoreRType/firmware/c/FreeRTOS-Kernel"]
+	path = noldaCoreRType/firmware/c/freertos/FreeRTOS-Kernel
+	url = https://github.com/FreeRTOS/FreeRTOS-Kernel
