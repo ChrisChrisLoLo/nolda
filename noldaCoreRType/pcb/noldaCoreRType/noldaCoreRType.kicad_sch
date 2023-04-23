@@ -2170,7 +2170,6 @@
     )
   )
 
-
   (junction (at 113.03 64.77) (diameter 0) (color 0 0 0 0)
     (uuid 01cda180-4fd9-48a7-b6a9-a97799de1096)
   )
@@ -3378,13 +3377,6 @@
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 87563af2-ad19-4521-ba31-408e6e263578)
     (property "Intersheet References" "${INTERSHEET_REFS}" (id 0) (at 87.5755 116.7606 0)
-      (effects (font (size 1.27 1.27)) (justify right) hide)
-    )
-  )
-  (global_label "SHARP_DISP" (shape input) (at 184.15 26.67 180) (fields_autoplaced)
-    (effects (font (size 1.27 1.27)) (justify right))
-    (uuid 87f3eeeb-aa9a-4972-8351-1c5b81b2f8ea)
-    (property "Intersheet References" "${INTERSHEET_REFS}" (id 0) (at 170.2464 26.5906 0)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )
@@ -5180,6 +5172,22 @@
     (pin "2" (uuid 8a3dc06c-f229-41f2-a29e-a3a433b09714))
   )
 
+  (symbol (lib_id "power:+3V3") (at 184.15 26.67 0) (unit 1)
+    (in_bom yes) (on_board yes) (fields_autoplaced)
+    (uuid bf36e9d5-29fc-4979-9020-81e493e3b1c6)
+    (property "Reference" "#PWR?" (id 0) (at 184.15 30.48 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+3V3" (id 1) (at 184.15 23.0942 0))
+    (property "Footprint" "" (id 2) (at 184.15 26.67 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (id 3) (at 184.15 26.67 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 139e5ec0-c045-4d91-be42-b4acf22d3338))
+  )
+
   (symbol (lib_id "Diode:BAT54C") (at 22.86 157.48 90) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid bf7fca2c-8d66-4445-8384-24070b48f222)
@@ -6010,6 +6018,9 @@
     )
     (path "/c9e039ca-a45a-4c78-aaf9-1296332dc260"
       (reference "#PWR0101") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/bf36e9d5-29fc-4979-9020-81e493e3b1c6"
+      (reference "#PWR?") (unit 1) (value "+3V3") (footprint "")
     )
     (path "/af385255-1fa6-45f8-bd2c-360f95357481"
       (reference "BZ1") (unit 1) (value "Buzzer") (footprint "Buzzer_Beeper:Buzzer_Murata_PKLCS1212E")
