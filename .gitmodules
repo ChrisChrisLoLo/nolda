@@ -1,0 +1,6 @@
+[submodule "noldaCoreRType/firmware/c/pico-sdk"]
+	path = noldaCoreRType/firmware/c/pico-sdk
+	url = https://github.com/raspberrypi/pico-sdk
+[submodule "noldaCoreRType/firmware/c/sp-pico-sdk"]
+	path = noldaCoreRType/firmware/c/sp-pico-sdk
+	url = https://github.com/ChrisChrisLoLo/pico-sdk.git
