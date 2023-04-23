@@ -21,6 +21,8 @@ project(noldaCore)
 # initialize the Raspberry Pi Pico SDK
 pico_sdk_init()
 
+add_subdirectory(freertos)
+
 # rest of your project
 add_executable(main
 main.c
