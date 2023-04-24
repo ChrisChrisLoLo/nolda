@@ -112,21 +112,33 @@ void refresh_screen_task()
     gpio_put(VCOM_PIN, 1);
     gpio_put(LED_PIN, 1);
 
+    u8g2_Setup_ls013b7dh03_128x128_1(&u8g2, U8G2_R0, u8x8_byte_pico_hw_spi, u8x8_gpio_and_delay_pico);
+    u8g2_InitDisplay(&u8g2);
+    u8g2_SetPowerSave(&u8g2, 0);
+    draw_display();
+
     while (true) {
         gpio_put(LED_PIN, 1);
         gpio_put(VCOM_PIN, 1);
 
-        vTaskDelay(500/portTICK_PERIOD_MS); // delay for 500 ms
+        vTaskDelay(200/portTICK_PERIOD_MS); // delay for 200 ms
         gpio_put(LED_PIN, 0);
         gpio_put(VCOM_PIN, 0);
 
-        vTaskDelay(500/portTICK_PERIOD_MS);
+        vTaskDelay(200/portTICK_PERIOD_MS);
     }
 }
 
 int main()
 {
     stdio_init_all();
+
+    // // attempt to reset spi bus
+    // gpio_init(PIN_CS);
+    // gpio_set_dir(PIN_CS, GPIO_OUT);
+    // gpio_put(PIN_CS, 0);
+    // sleep_us(100);
+    // //
 
     xTaskCreate(refresh_screen_task, "Refresh_Screen_Task", 256, NULL, 1, NULL);
 
