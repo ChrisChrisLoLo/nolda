@@ -89,7 +89,9 @@ void draw_display() {
         u8g2_ClearDisplay(&u8g2);
 	u8g2_SetDrawColor(&u8g2, 1);
         u8g2_SetFont(&u8g2, u8g2_font_t0_15_te);
-        u8g2_DrawStr(&u8g2, 20, 10, hey);
+        u8g2_DrawStr(&u8g2, 0, 10, hey);
+        u8g2_DrawStr(&u8g2, 0, 20, hey);
+        u8g2_DrawStr(&u8g2, 0, 40, hey);
         u8g2_UpdateDisplay(&u8g2);
 }
 
@@ -112,7 +114,7 @@ void refresh_screen_task()
     gpio_put(VCOM_PIN, 1);
     gpio_put(LED_PIN, 1);
 
-    u8g2_Setup_ls013b7dh03_128x128_1(&u8g2, U8G2_R0, u8x8_byte_pico_hw_spi, u8x8_gpio_and_delay_pico);
+    u8g2_Setup_ls013b7dh03_128x128_f(&u8g2, U8G2_R0, u8x8_byte_pico_hw_spi, u8x8_gpio_and_delay_pico);
     u8g2_InitDisplay(&u8g2);
     u8g2_SetPowerSave(&u8g2, 0);
     draw_display();
