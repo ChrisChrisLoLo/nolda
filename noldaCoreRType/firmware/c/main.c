@@ -56,10 +56,10 @@ uint8_t u8x8_gpio_and_delay_pico(u8x8_t *u8x8, uint8_t msg,uint8_t arg_int, void
     gpio_put(PIN_CS, 1);
     break;                  
   case U8X8_MSG_DELAY_NANO: // delay arg_int * 1 nano second
-    sleep_us(1000 * arg_int);
+    sleep_us(arg_int);
     break;
   case U8X8_MSG_DELAY_100NANO: // delay arg_int * 100 nano seconds
-    sleep_us(1000 * 100 * arg_int);
+    sleep_us(arg_int);
     break;
   case U8X8_MSG_DELAY_10MICRO: // delay arg_int * 10 micro seconds
     sleep_us(arg_int * 10);
@@ -93,28 +93,43 @@ void draw_display() {
         u8g2_UpdateDisplay(&u8g2);
 }
 
-void led_task()
+// Used to refresh the screen to prevent polarization
+// Can likely be moved to pio down the road
+void refresh_screen_task()
 {   
     const uint LED_PIN = PICO_DEFAULT_LED_PIN;
-    // gpio_init(LED_PIN);
-    // gpio_set_dir(LED_PIN, GPIO_OUT);
-    // while (true) {
-    //     gpio_put(LED_PIN, 1);
-    //     vTaskDelay(100);
-    //     gpio_put(LED_PIN, 0);
-    //     vTaskDelay(100);
-    // }
-    u8g2_Setup_ls013b7dh03_128x128_1(&u8g2, U8G2_R0, u8x8_byte_pico_hw_spi, u8x8_gpio_and_delay_pico);
-    u8g2_InitDisplay(&u8g2);
-    u8g2_SetPowerSave(&u8g2, 0);
-    draw_display();
+    const uint EXTMODE_PIN = 14;
+    const uint VCOM_PIN = 13;
+    gpio_init(LED_PIN);
+    gpio_init(EXTMODE_PIN);
+    gpio_init(VCOM_PIN);
+
+    gpio_set_dir(LED_PIN, GPIO_OUT);
+    gpio_set_dir(EXTMODE_PIN, GPIO_OUT);
+    gpio_set_dir(VCOM_PIN, GPIO_OUT);
+
+    gpio_put(EXTMODE_PIN, 1);   // enable extmode
+    gpio_put(VCOM_PIN, 1);
+    gpio_put(LED_PIN, 1);
+
+    while (true) {
+        gpio_put(LED_PIN, 1);
+        gpio_put(VCOM_PIN, 1);
+
+        vTaskDelay(500/portTICK_PERIOD_MS); // delay for 500 ms
+        gpio_put(LED_PIN, 0);
+        gpio_put(VCOM_PIN, 0);
+
+        vTaskDelay(500/portTICK_PERIOD_MS);
+    }
 }
 
 int main()
 {
     stdio_init_all();
 
-    xTaskCreate(led_task, "LED_Task", 256, NULL, 1, NULL);
+    xTaskCreate(refresh_screen_task, "Refresh_Screen_Task", 256, NULL, 1, NULL);
+
     vTaskStartScheduler();
 
     u8g2_Setup_ls013b7dh03_128x128_1(&u8g2, U8G2_R0, u8x8_byte_pico_hw_spi, u8x8_gpio_and_delay_pico);
