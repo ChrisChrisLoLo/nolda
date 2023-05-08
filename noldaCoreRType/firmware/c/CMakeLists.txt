@@ -39,6 +39,10 @@ add_executable(main
 # Add pico_stdlib library which aggregates commonly used features
 target_link_libraries(main pico_stdlib hardware_spi freertos u8g2)
 
+# use serial over USB
+pico_enable_stdio_usb(main 1)
+pico_enable_stdio_uart(main 0)
+
 # create map/bin/hex/uf2 file in addition to ELF
 pico_add_extra_outputs(main)
 
